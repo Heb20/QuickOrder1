@@ -11,11 +11,9 @@ package quickorder1;
  */
 public class QuickOrder1 {
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        //vamo' que saleeee...
     }
     
 }
