@@ -5,20 +5,21 @@ import java.util.*;
 /*Hebert */
 public class Pedido {
 
+
     private static int numero;
     private static Date fecha;
     private static float precio;
     private static TipoEstado estado;
-    //Privete Cliente cliente;
+    Cliente cliente;
     //Private Rrestaurante restaurante;
     LinkedList Productos ;
     
-    public Pedido(int numero, Date fecha, float precio, TipoEstado estado/*, Privete Cliente, Private Rrestaurante*/) {
+    public Pedido(int numero, Date fecha, float precio, TipoEstado estado, Cliente cliente /*Private Rrestaurante*/) {
         Pedido.numero = numero;
         this.fecha = fecha;
         Pedido.precio = precio;
         Pedido.estado = estado;
-        //this.Cliente = Cliente;
+        this.cliente = cliente;
         //this.Rrestaurante = Rrestaurante;
         Productos = new LinkedList();
     }
@@ -37,6 +38,10 @@ public class Pedido {
 
     public static void setEstado(TipoEstado estado) {
         Pedido.estado = estado;
+    }
+    
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public void setProductos(LinkedList Producto) {
@@ -57,6 +62,10 @@ public class Pedido {
 
     public TipoEstado getEstado() {
         return estado;
+    }
+    
+    public Cliente getCliente() {
+        return cliente;
     }
 
     public LinkedList getProductos() {
