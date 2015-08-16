@@ -9,15 +9,8 @@ public class Usuario {
    private String direccion;
    
    //Constructor
-   public Usuario (){
-      
-      this.nickname="";
-      this.nombre="";
-      this.email="";
-      this.direccion="";
-      
-   
-   };
+   public Usuario(){
+   }
    
    public Usuario (String nickname, String nombre, String email, String direccion){
       
@@ -26,7 +19,7 @@ public class Usuario {
       this.email=email;
       this.direccion=direccion;
       
-   };
+   }
 
    //Setters
    
