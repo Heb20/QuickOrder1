@@ -16,11 +16,12 @@ import javax.persistence.Persistence;
  */
 public class Test {
     
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Cattest");
-        EntityManager em = emf.createEntityManager();
         
-        Categoria cat = new Categoria();
         public void test(){
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrder1");
+            EntityManager em = emf.createEntityManager();
+        
+            Categoria cat = new Categoria();
             cat.setNombre("Cat1");
             
             em.getTransaction().begin();
