@@ -2,13 +2,19 @@
 package CapaLogica;
 
 //Alejandra
-public class Productos {
+public class Producto{
     protected String nombre;
     protected String descripcion;
     protected float precio;
     protected String imagen;
     
-    public Productos(String nombre,String descripcion, float precio, String imagen){
+    
+    //CONSTRUCTORES
+    
+    public Producto(){
+    }
+    
+    public Producto(String nombre,String descripcion, float precio, String imagen){
         this.nombre=nombre;
         this.descripcion=descripcion;
         this.precio=precio;
@@ -32,7 +38,7 @@ public class Productos {
     }
     
     
-     
+    
     public void SetNombre(String nombre){
         this.nombre=nombre;
     }
