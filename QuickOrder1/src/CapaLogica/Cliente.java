@@ -1,4 +1,6 @@
 
+//Natalie
+
 package CapaLogica;
 
 import java.util.Date;
@@ -64,6 +66,11 @@ public class Cliente extends Usuario{
    public String getImagen(){
        return imagen;
    }
+
+    @Override
+    public boolean registrarUsuario() {
+        return true;
+    }
    
 
 

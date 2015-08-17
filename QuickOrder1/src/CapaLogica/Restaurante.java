@@ -1,3 +1,5 @@
+//Natalie
+
 package CapaLogica;
 
 import java.util.ArrayList;
@@ -38,21 +40,18 @@ public class Restaurante extends Usuario{
    //Getters
 
     public ArrayList<Categoria> getListaCategorias(){
-        /*
-        ArrayList<Categoria> ListaCategorias = new ArrayList<Categoria>();
-        this.ListaCategorias = ListaCategorias;
-        */
+       
         return ListaCategorias;
     }
     
-    
     public ArrayList<String> getListaImagenes(){
-         /*
-        ArrayList<String> ListaImagenes = new ArrayList<String>();
-        this.ListaImagenes = ListaImagenes;
-        */
-        
+                
         return ListaImagenes;
+    }
+
+    @Override
+    public boolean registrarUsuario() {
+        return true;
     }
     
 }

@@ -1,6 +1,8 @@
+//Natalie
+
 package CapaLogica;
 
-public class Usuario {
+public abstract class Usuario {
 
    
    private String nickname;    
@@ -65,4 +67,7 @@ public class Usuario {
    public String getDireccion(){
        return direccion;
    }
+public abstract boolean registrarUsuario();
+
+
 }

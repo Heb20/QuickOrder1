@@ -21,12 +21,13 @@ public class Test {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrder1");
             EntityManager em = emf.createEntityManager();
         
-            Categoria cat = new Categoria();
+            /*Categoria cat = new Categoria();
             cat.setNombre("Pizeria");
             
             em.getTransaction().begin();
             em.persist(cat);
             em.getTransaction().commit();
+                    */
         }
 
 }
