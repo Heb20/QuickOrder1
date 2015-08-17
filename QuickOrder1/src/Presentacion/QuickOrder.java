@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*Versión 0.0.14*/
 package Presentacion;
 import Test.*;
 
-/**
- *
- * @author heb
- */
 public class QuickOrder extends javax.swing.JFrame {
 
     /**
