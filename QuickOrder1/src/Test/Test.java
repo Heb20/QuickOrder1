@@ -22,7 +22,7 @@ public class Test {
             EntityManager em = emf.createEntityManager();
         
             Categoria cat = new Categoria();
-            cat.setNombre("Cat1");
+            cat.setNombre("Pizeria");
             
             em.getTransaction().begin();
             em.persist(cat);
