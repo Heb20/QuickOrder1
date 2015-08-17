@@ -2,7 +2,7 @@
 package CapaLogica;
 
 //Alejandra
-public class Promocion extends Productos{
+public class Promocion extends Producto{
         private boolean activa;
         private float descuento;
       //  private Set ProductosPromocion; ver lo de la coleccion 
