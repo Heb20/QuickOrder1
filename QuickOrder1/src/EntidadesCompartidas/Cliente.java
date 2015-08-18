@@ -1,7 +1,7 @@
 
 //Natalie
 
-package CapaLogica;
+package EntidadesCompartidas;
 
 import java.util.Date;
 

@@ -1,5 +1,6 @@
 
-package CapaLogica;
+package EntidadesCompartidas;
+
 import java.util.*;
 
 /*Hebert */

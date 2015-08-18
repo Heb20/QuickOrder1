@@ -1,5 +1,5 @@
 
-package CapaLogica;
+package EntidadesCompartidas;
 
 //Alejandra
 public class Producto{

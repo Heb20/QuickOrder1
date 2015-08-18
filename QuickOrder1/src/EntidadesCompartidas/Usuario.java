@@ -1,6 +1,6 @@
 //Natalie
 
-package CapaLogica;
+package EntidadesCompartidas;
 
 public abstract class Usuario {
 

@@ -1,7 +1,8 @@
 
-package CapaLogica;
+package EntidadesCompartidas;
 
 //Alejandra
+
 public class Promocion extends Producto{
         private boolean activa;
         private float descuento;

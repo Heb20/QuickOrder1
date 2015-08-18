@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Test;
-import CapaLogica.Categoria;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

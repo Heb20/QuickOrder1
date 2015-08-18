@@ -1,5 +1,5 @@
 
-package CapaLogica;
+package EntidadesCompartidas;
 
 /*hebert  */
 public enum TipoEstado {
