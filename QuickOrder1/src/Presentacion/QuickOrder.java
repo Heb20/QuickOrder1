@@ -1,6 +1,7 @@
-/*Versión 0.0.15*/
+/*Versión 0.0.16*/
 package Presentacion;
 import Test.*;
+import javax.swing.JOptionPane;
 
 public class QuickOrder extends javax.swing.JFrame {
 
@@ -36,9 +37,22 @@ public class QuickOrder extends javax.swing.JFrame {
         jMenu2.setText("Registros");
 
         jMenuItem3.setText("Registrar Cliente");
+        jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem3MousePressed(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem3MouseClicked(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem2.setText("Registrar Restaurante");
+        jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem2MouseClicked(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem1.setText("Registrar Pedido");
@@ -64,6 +78,22 @@ public class QuickOrder extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MouseClicked
+    }//GEN-LAST:event_jMenuItem3MouseClicked
+
+    private void jMenuItem3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MousePressed
+        // TODO add your handling code here:
+        System.out.println("prueba");
+        Cliente_ver view= new Cliente_ver();
+        view.setSize(420, 400);
+        view.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem3MousePressed
+
+    private void jMenuItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2MouseClicked
 
     /**
      * @param args the command line arguments
