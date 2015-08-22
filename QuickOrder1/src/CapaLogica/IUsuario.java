@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public interface IUsuario {
     
-    public void AltaUsuario(Usuario usuario);
+    //Naty
     public boolean RegistrarCliente(String nickname, String email, String nombre, String direccion, String apellido, Date fechaNac, String Imagen);
 }
 
