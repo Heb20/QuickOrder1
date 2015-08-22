@@ -2,12 +2,28 @@
 
 package EntidadesCompartidas;
 
-public abstract class Usuario {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
-   
+@Entity
+@Table(name="Usuario")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Usuario implements Serializable{
+    
+   @Id
+   @Column(name="nickname", nullable=false)
    private String nickname;    
-   private String nombre;
+   @Id
+   @Column(name="email", nullable=false)
    private String email;
+   @Column(name="nombre", nullable=false)
+   private String nombre;
+   @Column(name="direccion", nullable=false)
    private String direccion;
    
    //Constructor
@@ -67,7 +83,4 @@ public abstract class Usuario {
    public String getDireccion(){
        return direccion;
    }
-public abstract boolean registrarUsuario();
-
-
 }
