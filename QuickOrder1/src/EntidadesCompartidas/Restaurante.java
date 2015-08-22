@@ -2,10 +2,11 @@
 
 package EntidadesCompartidas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Restaurante extends Usuario{ 
+public class Restaurante extends Usuario implements Serializable{ 
     
     //Array que contiene las categorias que registra el restaurante
     private ArrayList<Categoria> ListaCategorias;
@@ -48,10 +49,4 @@ public class Restaurante extends Usuario{
                 
         return ListaImagenes;
     }
-
-    @Override
-    public boolean registrarUsuario() {
-        return true;
-    }
-    
 }
