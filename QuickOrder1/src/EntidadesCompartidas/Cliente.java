@@ -3,13 +3,26 @@
 
 package EntidadesCompartidas;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Temporal;
 
-
-public class Cliente extends Usuario{
+/**
+ *
+ * @author heb
+ */
+@Entity
+@PrimaryKeyJoinColumn(name="Usuario_nickname")
+public class Cliente extends Usuario implements Serializable {
     
+    @Column(name="apellido", nullable=false)
     private String apellido;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNac;
+    @Column(name="imagen", nullable=false)
     private String imagen;
     
     //Constructor
@@ -65,14 +78,5 @@ public class Cliente extends Usuario{
    
    public String getImagen(){
        return imagen;
-   }
-
-    @Override
-    public boolean registrarUsuario() {
-        return true;
-    }
-   
-
-
-    
+   }    
 }
