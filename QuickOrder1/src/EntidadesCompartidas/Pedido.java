@@ -1,32 +1,56 @@
 
 package EntidadesCompartidas;
 
+import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /*Hebert */
-public class Pedido {
 
+@Entity
+@Table(name="Pedidos")
+public class Pedido implements Serializable {
 
-    private static int numero;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name="fecha", nullable=false)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private static Date fecha;
     private static float precio;
+    @Column(name="estado", nullable=false)
+    @Enumerated(EnumType.STRING)
     private static TipoEstado estado;
+    @OneToOne
     Cliente cliente;
-    //Private Rrestaurante restaurante;
-    LinkedList Productos ;
+    @OneToOne
+    Restaurante restaurante;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private ArrayList<Producto> ListaProductos;
     
-    public Pedido(int numero, Date fecha, float precio, TipoEstado estado, Cliente cliente /*Private Rrestaurante*/) {
-        Pedido.numero = numero;
-        this.fecha = fecha;
+
+    public Pedido() {
+    }
+    
+    
+    public Pedido(Date fecha, float precio, TipoEstado estado, Cliente cliente, Restaurante restaurante) {
+        Pedido.fecha = fecha;
         Pedido.precio = precio;
         Pedido.estado = estado;
         this.cliente = cliente;
-        //this.Rrestaurante = Rrestaurante;
-        Productos = new LinkedList();
-    }
-    
-    public static void setNumero(int numero) {
-        Pedido.numero = numero;
+        this.restaurante = restaurante;
     }
 
     public static void setFecha(Date fecha) {
@@ -44,13 +68,13 @@ public class Pedido {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
-    public void setProductos(LinkedList Producto) {
-        this.Productos = Producto;
+    
+    public Long getId() {
+        return id;
     }
 
-    public int getNumero() {
-        return numero;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getFecha() {
@@ -68,10 +92,4 @@ public class Pedido {
     public Cliente getCliente() {
         return cliente;
     }
-
-    public LinkedList getProductos() {
-        return Productos;
-    }
-    
-    
 }

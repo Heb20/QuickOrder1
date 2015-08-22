@@ -10,15 +10,15 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name="Usuario")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable{
     
    @Id
    @Column(name="nickname", nullable=false)
    private String nickname;    
-   @Id
    @Column(name="email", nullable=false)
    private String email;
    @Column(name="nombre", nullable=false)
@@ -38,6 +38,7 @@ public class Usuario implements Serializable{
       this.direccion=direccion;
       
    }
+
 
    //Setters
    

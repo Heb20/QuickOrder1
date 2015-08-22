@@ -15,11 +15,12 @@ import javax.persistence.Temporal;
  * @author heb
  */
 @Entity
-@PrimaryKeyJoinColumn(name="Usuario_nickname")
+@PrimaryKeyJoinColumn(referencedColumnName="nickname")
 public class Cliente extends Usuario implements Serializable {
     
     @Column(name="apellido", nullable=false)
     private String apellido;
+    @Column(name="Fecha_nac", nullable=false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNac;
     @Column(name="imagen", nullable=false)

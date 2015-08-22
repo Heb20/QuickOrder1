@@ -2,11 +2,28 @@
 package EntidadesCompartidas;
 
 //Alejandra
-public class Producto{
-    protected String nombre;
-    protected String descripcion;
-    protected float precio;
-    protected String imagen;
+
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+@Entity
+@Table
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Producto implements Serializable{
+    @Id
+    @Column(name="nombre", nullable=false)
+    private String nombre;
+    @Column(name="descripcion", nullable=false)
+    private String descripcion;
+    @Column(name="precio", nullable=false)
+    private float precio;
+    @Column(name="imagen", nullable=false)
+    private String imagen;
     
     
     //CONSTRUCTORES
