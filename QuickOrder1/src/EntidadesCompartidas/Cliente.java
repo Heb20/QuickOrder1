@@ -77,6 +77,6 @@ public class Cliente extends Usuario implements Serializable {
    
    
    public String getImagen(){
-       return imagen;
-   }    
+       return imagen;    
+   }
 }

@@ -23,19 +23,19 @@ public class Restaurante extends Usuario implements Serializable{
    public Restaurante (String nickname, String nombre, String email, String direccion){
    
       super(nickname, nombre, email, direccion); 
-      ListaCategorias = new ArrayList();
-      ListaImagenes = new ArrayList();
+      ListaCategorias = new ArrayList<Categoria>();
+      ListaImagenes = new ArrayList<String>();
            
    }
    
    //Setters
    
-   public void setCategorias(ArrayList ListaCategorias) {
+   public void setCategorias(ArrayList<Categoria> ListaCategorias) {
         this.ListaCategorias = ListaCategorias;
     }
 
-    public void setImagenes(ArrayList Imagenes) {
-        this.ListaImagenes = Imagenes;
+    public void setImagenes(ArrayList<String> ListaImagenes) {
+        this.ListaImagenes = ListaImagenes;
     }
    
    //Getters

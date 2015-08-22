@@ -6,6 +6,9 @@
 package CapaLogica;
 
 import EntidadesCompartidas.Usuario;
+import java.util.ArrayList;
+import java.util.Date;
+
 
 /**
  *
@@ -14,5 +17,7 @@ import EntidadesCompartidas.Usuario;
 public interface IUsuario {
     
     public void AltaUsuario(Usuario usuario);
-    
+    public boolean RegistrarCliente(String nickname, String email, String nombre, String direccion, String apellido, Date fechaNac, String Imagen);
 }
+
+
