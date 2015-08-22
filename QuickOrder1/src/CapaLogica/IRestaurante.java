@@ -6,6 +6,7 @@
 package CapaLogica;
 
 import EntidadesCompartidas.Categoria;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,4 +14,5 @@ import EntidadesCompartidas.Categoria;
  */
 public interface IRestaurante {
     public void AltaCategoria(Categoria categoria);
+    public boolean RegistrarRestaurante(String nickname, String email, String nombre, String direccion, ArrayList<String> ListaImagenes, ArrayList<Categoria> ListaCategorias); 
 }

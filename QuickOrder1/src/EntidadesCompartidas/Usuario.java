@@ -2,7 +2,7 @@
 
 package EntidadesCompartidas;
 
-public abstract class Usuario {
+public class Usuario{
 
    
    private String nickname;    
@@ -67,7 +67,4 @@ public abstract class Usuario {
    public String getDireccion(){
        return direccion;
    }
-public abstract boolean registrarUsuario();
-
-
 }

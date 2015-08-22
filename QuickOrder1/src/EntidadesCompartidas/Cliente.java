@@ -67,10 +67,6 @@ public class Cliente extends Usuario{
        return imagen;
    }
 
-    @Override
-    public boolean registrarUsuario() {
-        return true;
-    }
    
 
 
