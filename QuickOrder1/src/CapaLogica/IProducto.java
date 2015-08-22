@@ -6,6 +6,7 @@
 package CapaLogica;
 
 import EntidadesCompartidas.Producto;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,4 +14,7 @@ import EntidadesCompartidas.Producto;
  */
 public interface IProducto {
     public void AltaProducto(Producto producto);
+    
+    //Devuelve una lista de los productos de un restaurante
+    public ArrayList<Producto> ListarProductosPorRestaurante(int restauranteId);
 }

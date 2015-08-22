@@ -6,6 +6,7 @@
 package CapaLogica;
 
 import EntidadesCompartidas.Categoria;
+import EntidadesCompartidas.Restaurante;
 import java.util.ArrayList;
 
 /**
@@ -22,4 +23,11 @@ public interface IRestaurante {
     public ArrayList<Categoria> SeleccionarCategorias(ArrayList<Categoria> categorias);
     //Naty
     public ArrayList<String> SeleccionarImagenes(ArrayList<String> imagenes);
+    
+    
+    //Devuelve una lista con todas las categorias
+    public ArrayList<Categoria> ListaCategorias();
+    
+    //Devuelve una lista con todos los restaurantes asociados a esa categoria
+    public ArrayList<Restaurante> ListaRestaurantePorCategoria(String categoria);
 }

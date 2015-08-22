@@ -13,4 +13,7 @@ import EntidadesCompartidas.Pedido;
  */
 public interface IPedido {
     public void AltaPedido(Pedido pedido);
+    
+    //Elimina del sistema un pedido.
+    public void BajaPedido(Pedido pedido);
 }
