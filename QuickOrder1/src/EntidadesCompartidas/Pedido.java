@@ -28,11 +28,11 @@ public class Pedido implements Serializable {
     private Long id;
     @Column(name="fecha", nullable=false)
     @Temporal(javax.persistence.TemporalType.DATE)
-    private static Date fecha;
-    private static float precio;
+    private Date fecha;
+    private float precio;
     @Column(name="estado", nullable=false)
     @Enumerated(EnumType.STRING)
-    private static TipoEstado estado;
+    private TipoEstado estado;
     @OneToOne
     Cliente cliente;
     @OneToOne
@@ -46,23 +46,23 @@ public class Pedido implements Serializable {
     
     
     public Pedido(Date fecha, float precio, TipoEstado estado, Cliente cliente, Restaurante restaurante) {
-        Pedido.fecha = fecha;
-        Pedido.precio = precio;
-        Pedido.estado = estado;
+        this.fecha = fecha;
+        this.precio = precio;
+        this.estado = estado;
         this.cliente = cliente;
         this.restaurante = restaurante;
     }
 
-    public static void setFecha(Date fecha) {
-        Pedido.fecha = fecha;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public static void setPrecio(float precio) {
-        Pedido.precio = precio;
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 
-    public static void setEstado(TipoEstado estado) {
-        Pedido.estado = estado;
+    public void setEstado(TipoEstado estado) {
+        this.estado = estado;
     }
     
     public void setCliente(Cliente cliente) {
@@ -71,10 +71,6 @@ public class Pedido implements Serializable {
     
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Date getFecha() {
@@ -92,4 +88,20 @@ public class Pedido implements Serializable {
     public Cliente getCliente() {
         return cliente;
     }
+        public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public void setRestaurante(Restaurante restaurante) {
+        this.restaurante = restaurante;
+    }
+
+    public ArrayList<Producto> getListaProductos() {
+        return ListaProductos;
+    }
+
+    public void setListaProductos(ArrayList<Producto> ListaProductos) {
+        this.ListaProductos = ListaProductos;
+    }
+    
 }

@@ -5,16 +5,19 @@ package EntidadesCompartidas;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-@Table
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="Tipo_Producto")
 public class Producto implements Serializable{
+
     @Id
     @Column(name="nombre", nullable=false)
     private String nombre;
@@ -24,7 +27,9 @@ public class Producto implements Serializable{
     private float precio;
     @Column(name="imagen", nullable=false)
     private String imagen;
-    
+    @ManyToOne
+    @JoinColumn(name="nickname")
+    private Restaurante restaurante;
     
     //CONSTRUCTORES
     
@@ -72,4 +77,11 @@ public class Producto implements Serializable{
         this.imagen=imagen;
     }
     
+    public Restaurante getRestaurante() {
+        return restaurante;
+    }
+
+    public void setRestaurante(Restaurante restaurante) {
+        this.restaurante = restaurante;
+    }
 }

@@ -3,11 +3,12 @@ package EntidadesCompartidas;
 
 //Alejandra
 
+
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@PrimaryKeyJoinColumn(referencedColumnName="nombre")
+@DiscriminatorValue("Individual")
 public class Individual extends Producto{
 
     public Individual() {

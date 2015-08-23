@@ -5,24 +5,26 @@ package EntidadesCompartidas;
 
 import java.util.ArrayList;
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@PrimaryKeyJoinColumn(referencedColumnName="nombre")
+@DiscriminatorValue("Promocion")
 public class Promocion extends Producto{
+
+    
         private boolean activa;
         private float descuento;
         @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-        private ArrayList<Producto> ListaproductosPromo;
+        private ArrayList<Individual> ListaproductosPromo;
 
     public Promocion() {
     }
                 
                   
-        public Promocion(String nombre,String descripcion,float precio,String imagen,boolean activa,float descuento,String imagenPromocion){
+        public Promocion(String nombre,String descripcion,float precio,String imagen,boolean activa,float descuento){
         super(nombre, descripcion,precio,imagen); 
         this.activa=activa;
         this.descuento=descuento;
@@ -43,4 +45,20 @@ public class Promocion extends Producto{
         public void SetDescuento(float descuento){
             this.descuento=descuento;
         }    
+        
+        public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+    }
+
+    public ArrayList<Individual> getListaproductosPromo() {
+        return ListaproductosPromo;
+    }
+
+    public void setListaproductosPromo(ArrayList<Individual> ListaproductosPromo) {
+        this.ListaproductosPromo = ListaproductosPromo;
+    }
 }
