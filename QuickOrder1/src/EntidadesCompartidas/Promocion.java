@@ -13,8 +13,7 @@ import javax.persistence.ManyToMany;
 @Entity
 @DiscriminatorValue("Promocion")
 public class Promocion extends Producto{
-
-    
+   
         private boolean activa;
         private float descuento;
         @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -61,4 +60,10 @@ public class Promocion extends Producto{
     public void setListaproductosPromo(ArrayList<Individual> ListaproductosPromo) {
         this.ListaproductosPromo = ListaproductosPromo;
     }
+    
+    @Override
+    public String toString() {
+        return "Promocion{" + "activa=" + activa + ", descuento=" + descuento + ", ListaproductosPromo=" + ListaproductosPromo + '}';
+    }
+    
 }

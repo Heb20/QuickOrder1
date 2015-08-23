@@ -104,4 +104,8 @@ public class Pedido implements Serializable {
         this.ListaProductos = ListaProductos;
     }
     
+    @Override
+    public String toString() {
+        return "Pedido{" + "id=" + id + ", fecha=" + fecha + ", precio=" + precio + ", estado=" + estado + ", cliente=" + cliente + ", restaurante=" + restaurante + ", ListaProductos=" + ListaProductos + '}';
+    }
 }

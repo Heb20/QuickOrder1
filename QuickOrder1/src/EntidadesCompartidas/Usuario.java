@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable{
-    
+
    @Id
    @Column(name="nickname", nullable=false)
    private String nickname;    
@@ -80,8 +80,13 @@ public class Usuario implements Serializable{
        return email;
    }
    
-   
    public String getDireccion(){
        return direccion;
    }
+   
+    @Override
+    public String toString() {
+        return "Usuario{" + "nickname=" + nickname + ", email=" + email + ", nombre=" + nombre + ", direccion=" + direccion + '}';
+    }
+    
 }

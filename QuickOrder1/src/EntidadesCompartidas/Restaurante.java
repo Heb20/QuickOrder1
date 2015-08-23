@@ -60,4 +60,10 @@ public class Restaurante extends Usuario implements Serializable{
                 
         return ListaImagenes;
     }
+    
+    @Override
+    public String toString() {
+        return "Restaurante{" + "ListaCategorias=" + ListaCategorias + ", ListaImagenes=" + ListaImagenes + '}';
+    }
+    
 }

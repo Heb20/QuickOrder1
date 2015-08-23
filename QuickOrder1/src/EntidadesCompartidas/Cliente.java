@@ -17,7 +17,7 @@ import javax.persistence.Temporal;
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName="nickname")
 public class Cliente extends Usuario implements Serializable {
-    
+
     @Column(name="apellido", nullable=false)
     private String apellido;
     @Column(name="Fecha_nac", nullable=false)
@@ -80,4 +80,10 @@ public class Cliente extends Usuario implements Serializable {
    public String getImagen(){
        return imagen;    
    }
+   
+    @Override
+    public String toString() {
+        return "Cliente{" + "apellido=" + apellido + ", fechaNac=" + fechaNac + ", imagen=" + imagen + '}';
+    }
+    
 }

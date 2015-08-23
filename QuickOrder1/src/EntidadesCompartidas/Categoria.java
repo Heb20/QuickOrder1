@@ -9,6 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="categoria")
 public class Categoria implements Serializable {
+
     @Id
     @Column(name="nombre", nullable=false)
     private String nombre;
@@ -34,4 +35,9 @@ public class Categoria implements Serializable {
         this.nombre = nombre;
     } 
 
+        @Override
+    public String toString() {
+        return "Categoria{" + "nombre=" + nombre + '}';
+    }
+    
 }
