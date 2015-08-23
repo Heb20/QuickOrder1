@@ -1,6 +1,7 @@
 /*Versión 0.0.16*/
 package Presentacion;
 import Test.*;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
 
 public class QuickOrder extends javax.swing.JFrame {
@@ -97,8 +98,9 @@ public class QuickOrder extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
+     * @throws java.text.ParseException
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ParseException {
         new Test().test();
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -125,6 +127,7 @@ public class QuickOrder extends javax.swing.JFrame {
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new QuickOrder().setVisible(true);
             }
