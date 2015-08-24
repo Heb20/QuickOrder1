@@ -38,7 +38,7 @@ public class Pedido implements Serializable {
     @OneToOne
     Restaurante restaurante;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private ArrayList<Producto> ListaProductos;
+    private ArrayList<Object[]> ListaProductos;
     
 
     public Pedido() {
@@ -96,11 +96,11 @@ public class Pedido implements Serializable {
         this.restaurante = restaurante;
     }
 
-    public ArrayList<Producto> getListaProductos() {
+    public ArrayList<Object[]> getListaProductos() {
         return ListaProductos;
     }
 
-    public void setListaProductos(ArrayList<Producto> ListaProductos) {
+    public void setListaProductos(ArrayList<Object[]> ListaProductos) {
         this.ListaProductos = ListaProductos;
     }
     

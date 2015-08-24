@@ -78,9 +78,14 @@ public class Test {
             em.persist(prom);
             
             Pedido ped;
-            ArrayList<Producto> ListaProductos = new ArrayList<>();
-            ListaProductos.add(prom);
-            ListaProductos.add(ind1);
+            ArrayList<Object[]> ListaProductos = new ArrayList<>();
+            
+            Object[] arrayProd = {prom, 1}; 
+            ListaProductos.add(arrayProd);
+            
+            Object[] arrayProd2 = {ind1, 1}; 
+            ListaProductos.add(arrayProd2);
+            
             ped = new Pedido(fech1, 160, Recibido, cli, res);
             ped.setListaProductos(ListaProductos);
             em.persist(ped);

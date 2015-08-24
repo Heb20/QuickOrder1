@@ -5,6 +5,7 @@
  */
 package CapaLogica;
 
+import EntidadesCompartidas.Restaurante;
 import java.util.ArrayList;
 
 /**
@@ -22,8 +23,9 @@ public class Producto implements IProducto{
     }
 
     @Override
-    public ArrayList<EntidadesCompartidas.Producto> ListarProductosPorRestaurante(int restauranteId) {
+    public ArrayList<EntidadesCompartidas.Producto> ListarProductosPorRestaurante(Restaurante restaurante) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+ 
 }

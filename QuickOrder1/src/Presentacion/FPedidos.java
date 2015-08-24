@@ -5,17 +5,73 @@
  */
 package Presentacion;
 
+import CapaLogica.Fabrica;
+import CapaLogica.IPedido;
+import CapaLogica.IProducto;
+import CapaLogica.IRestaurante;
+import EntidadesCompartidas.Categoria;
+import javax.swing.DefaultListModel;
+import EntidadesCompartidas.Cliente;
+import EntidadesCompartidas.Producto;
+import EntidadesCompartidas.Restaurante;
+import CapaLogica.Usuario;
+import EntidadesCompartidas.Pedido;
+import EntidadesCompartidas.TipoEstado;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.ComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Romina
  */
-public class Pedidos extends javax.swing.JFrame {
+public class FPedidos extends javax.swing.JFrame {
 
+    
+    //Defino los listModel para cargar las listas
+    DefaultListModel<Cliente> listModelClientes = new DefaultListModel<>();
+    DefaultListModel<Restaurante> listModelRestaurantes = new DefaultListModel<>();
+    DefaultListModel<Producto> listModelProducto = new DefaultListModel<>();
+    DefaultListModel<Producto> listModelProductoPedido = new DefaultListModel<>();
+    
+    int totalPedido;
+    
+    //Lista donde cargo los productos del cliente
+    ArrayList<Object> listaProductosCliente;
+    
     /**
      * Creates new form GenerarPedido
      */
-    public Pedidos() {
+    public FPedidos() {
         initComponents();
+        
+        listaProductosCliente = new ArrayList<>();
+        totalPedido=0;
+        
+        try{
+            
+            //Cargo la lista con los usuarios
+            listModelClientes.clear();
+            CapaLogica.Fabrica fabrica = new Fabrica();
+            CapaLogica.IUsuario logicaUsuario =  fabrica.GetUsuario();
+            for(EntidadesCompartidas.Cliente client : logicaUsuario.ListarClientes()){
+                listModelClientes.addElement(client);
+            }
+            listClientes.setModel(listModelClientes);       
+            
+            
+            //Cargo el combo con las categorias
+            cmbCategorias.removeAllItems();
+            CapaLogica.IRestaurante logicaRestaurante =  fabrica.GetRestaurante();
+            for(EntidadesCompartidas.Categoria categ : logicaRestaurante.ListaCategorias()){
+                cmbCategorias.addItem(categ);
+            }            
+         }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Pedidos", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -52,15 +108,16 @@ public class Pedidos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         lblDireccion = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lblDireccion1 = new javax.swing.JLabel();
+        lblRestaurante = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        listProductosPedidos = new javax.swing.JList();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         btnConfirmar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
+        btnQuitarProducto = new javax.swing.JButton();
         menuPedidos = new javax.swing.JMenuBar();
         menuGenerarPedido = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -79,6 +136,11 @@ public class Pedidos extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        listClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listClientesValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(listClientes);
 
         javax.swing.GroupLayout panelClientesLayout = new javax.swing.GroupLayout(panelClientes);
@@ -92,9 +154,10 @@ public class Pedidos extends javax.swing.JFrame {
         );
         panelClientesLayout.setVerticalGroup(
             panelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelClientesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelClientesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         panelRestaurantes.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Restaurantes"));
@@ -112,10 +175,20 @@ public class Pedidos extends javax.swing.JFrame {
         jLabel5.setText("Categorias:");
 
         btnCategoria.setText("Filtrar");
+        btnCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCategoriaMouseClicked(evt);
+            }
+        });
 
         jLabel6.setText("Restaurantes:");
 
         btnRestaurante.setText("Seleccionar");
+        btnRestaurante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRestauranteMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRestaurantesLayout = new javax.swing.GroupLayout(panelRestaurantes);
         panelRestaurantes.setLayout(panelRestaurantesLayout);
@@ -130,13 +203,13 @@ public class Pedidos extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(cmbCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(panelRestaurantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnRestaurante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelRestaurantesLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRestaurante)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelRestaurantesLayout.setVerticalGroup(
@@ -151,12 +224,10 @@ public class Pedidos extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelRestaurantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelRestaurantesLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(btnRestaurante))
-                    .addComponent(jLabel6))
-                .addContainerGap())
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(btnRestaurante))
+                .addGap(45, 45, 45))
         );
 
         panelProductos.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Productos"));
@@ -175,6 +246,11 @@ public class Pedidos extends javax.swing.JFrame {
         jLabel1.setText("Cantidad");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelProductosLayout = new javax.swing.GroupLayout(panelProductos);
         panelProductos.setLayout(panelProductosLayout);
@@ -190,7 +266,7 @@ public class Pedidos extends javax.swing.JFrame {
                         .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAgregar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         panelProductosLayout.setVerticalGroup(
             panelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,14 +293,14 @@ public class Pedidos extends javax.swing.JFrame {
 
         jLabel4.setText("Restaurante:");
 
-        lblDireccion1.setText("El nombre del rest");
+        lblRestaurante.setText("El nombre del rest");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        listProductosPedidos.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane5.setViewportView(jList1);
+        jScrollPane5.setViewportView(listProductosPedidos);
 
         jLabel7.setText("Productos:");
 
@@ -234,22 +310,40 @@ public class Pedidos extends javax.swing.JFrame {
 
         btnConfirmar.setText("Confirmar Pedido");
         btnConfirmar.setToolTipText("");
+        btnConfirmar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConfirmarMouseClicked(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.setToolTipText("");
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseClicked(evt);
+            }
+        });
+
+        btnQuitarProducto.setText("Quitar");
+        btnQuitarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnQuitarProductoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPedidoLayout = new javax.swing.GroupLayout(panelPedido);
         panelPedido.setLayout(panelPedidoLayout);
         panelPedidoLayout.setHorizontalGroup(
             panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPedidoLayout.createSequentialGroup()
-                .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelPedidoLayout.createSequentialGroup()
+                .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPedidoLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPedidoLayout.createSequentialGroup()
+                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))
+                    .addGroup(panelPedidoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelPedidoLayout.createSequentialGroup()
@@ -268,20 +362,25 @@ public class Pedidos extends javax.swing.JFrame {
                                     .addComponent(jLabel7))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblDireccion1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelPedidoLayout.createSequentialGroup()
-                .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelPedidoLayout.createSequentialGroup()
+                                        .addComponent(jScrollPane5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnQuitarProducto))
+                                    .addGroup(panelPedidoLayout.createSequentialGroup()
+                                        .addComponent(lblRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(panelPedidoLayout.createSequentialGroup()
-                        .addGap(101, 101, 101)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnConfirmar))
-                    .addGroup(panelPedidoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelPedidoLayout.createSequentialGroup()
+                                .addGap(101, 101, 101)
+                                .addComponent(btnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnConfirmar))
+                            .addGroup(panelPedidoLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         panelPedidoLayout.setVerticalGroup(
             panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,22 +396,25 @@ public class Pedidos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(lblDireccion1))
+                    .addComponent(lblRestaurante))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(lblTotal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConfirmar)
-                    .addComponent(btnCancelar))
-                .addGap(0, 17, Short.MAX_VALUE))
+                    .addGroup(panelPedidoLayout.createSequentialGroup()
+                        .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(lblTotal))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnConfirmar)
+                            .addComponent(btnCancelar)))
+                    .addComponent(btnQuitarProducto))
+                .addGap(0, 24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout IFrameGenerarPedidoLayout = new javax.swing.GroupLayout(IFrameGenerarPedido.getContentPane());
@@ -324,24 +426,26 @@ public class Pedidos extends javax.swing.JFrame {
                 .addGroup(IFrameGenerarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(IFrameGenerarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(18, 18, 18)
+                .addGroup(IFrameGenerarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelRestaurantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(IFrameGenerarPedidoLayout.createSequentialGroup()
+                        .addComponent(panelRestaurantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 18, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         IFrameGenerarPedidoLayout.setVerticalGroup(
             IFrameGenerarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(IFrameGenerarPedidoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(IFrameGenerarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelRestaurantes, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(IFrameGenerarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelRestaurantes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(panelClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(IFrameGenerarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 34, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         panelClientes.getAccessibleContext().setAccessibleName("Lista de Clientes");
@@ -360,20 +464,171 @@ public class Pedidos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(IFrameGenerarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(34, Short.MAX_VALUE)
                 .addComponent(IFrameGenerarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addContainerGap())
         );
 
         IFrameGenerarPedido.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void listClientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listClientesValueChanged
+        
+        if(listClientes.getSelectedIndex()<0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente.", "Pedidos", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            //Obtengo el cliente seleccionado
+             EntidadesCompartidas.Cliente cliente = (EntidadesCompartidas.Cliente)listClientes.getSelectedValue();
+             
+             //Muestro en las labels los datos.
+             lblClienteNombre.setText(cliente.getNombre()+" "+cliente.getApellido());
+             lblDireccion.setText(cliente.getDireccion());
+        }
+    }//GEN-LAST:event_listClientesValueChanged
+
+    private void btnCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCategoriaMouseClicked
+       if(cmbCategorias.getSelectedIndex()<0){
+                 JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria.", "Pedidos", JOptionPane.INFORMATION_MESSAGE);
+       }
+       else{
+           //Obtengo la categoria seleccionada
+           EntidadesCompartidas.Categoria categoria = (EntidadesCompartidas.Categoria)cmbCategorias.getSelectedItem();
+           
+           //Obtengo los restaurantes con esa categoria y los cargo en la lista
+           listModelRestaurantes.clear();
+           Fabrica fabrica = new Fabrica();
+           IRestaurante logicaRestaurante = fabrica.GetRestaurante();
+           for(EntidadesCompartidas.Restaurante rest:logicaRestaurante.ListaRestaurantePorCategoria(categoria.getNombre())){
+               listModelRestaurantes.addElement(rest);
+           }
+           listRestaurantes.setModel(listModelRestaurantes);
+       }
+    }//GEN-LAST:event_btnCategoriaMouseClicked
+
+    private void btnRestauranteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRestauranteMouseClicked
+        if(listRestaurantes.getSelectedIndex()<0){
+                 JOptionPane.showMessageDialog(this, "Debe seleccionar un restaurante.", "Pedidos", JOptionPane.INFORMATION_MESSAGE);
+       }
+        else{
+        
+            //Obtengo el restaurant seleccionado
+            EntidadesCompartidas.Restaurante rest = (EntidadesCompartidas.Restaurante)listRestaurantes.getSelectedValue();
+            
+            //Obtengo los productos del restaurant y los cargo en la lista
+            listModelProducto.clear();
+            Fabrica fabrica = new Fabrica();
+            IProducto logicaProducto = fabrica.GetProducto();
+            for(EntidadesCompartidas.Producto prod : logicaProducto.ListarProductosPorRestaurante(rest)){
+                listModelProducto.addElement(prod);
+            }
+            listProductos.setModel(listModelClientes);
+            
+            //Cargo en la label el nombre
+            lblRestaurante.setText(rest.getNombre());
+        }
+    }//GEN-LAST:event_btnRestauranteMouseClicked
+
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+        if(listProductos.getSelectedIndex()<0){
+             JOptionPane.showMessageDialog(this, "Debe seleccionar un producto.", "Pedidos", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            
+            int cantidad = 0;
+            
+            try{
+              cantidad= Integer.getInteger(txtCantidad.getText());
+            }
+            catch(Exception ex){
+                     JOptionPane.showMessageDialog(this, "Ingrese una cantidad valida", "Pedidos", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            EntidadesCompartidas.Producto prod = (EntidadesCompartidas.Producto) listProductos.getSelectedValue();
+            
+            ///TODO: Reever donde poner la cantidad de productos pedidos en la lista
+            listModelProductoPedido.addElement(prod);
+            listProductosPedidos.setModel(listModelProductoPedido);
+            
+            totalPedido+=(prod.getPrecio()*cantidad);
+            lblTotal.setText(Integer.toString(totalPedido));
+                    
+            Object[] arrayProd= {prod, cantidad};
+            listaProductosCliente.add(arrayProd);
+            
+            listProductos.clearSelection();
+            txtCantidad.setText("1");
+        }
+    }//GEN-LAST:event_btnAgregarMouseClicked
+
+    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+        
+        listClientes.clearSelection();
+        listClientes.setSelectedIndex(-1);
+        
+        listProductos.clearSelection();
+        listProductos.removeAll();
+        
+        listProductosPedidos.removeAll();
+        
+        listRestaurantes.clearSelection();
+        listRestaurantes.removeAll();
+        
+        cmbCategorias.setSelectedIndex(-1);
+        
+        lblClienteNombre.setText("");
+        lblDireccion.setText("");
+        lblRestaurante.setText("");
+        lblTotal.setText("0");
+        
+        txtCantidad.setText("1");
+    }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void btnConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarMouseClicked
+        
+        if(listProductosPedidos.getComponentCount() <0){
+            JOptionPane.showMessageDialog(this,"Debe agregar un producto.", "Producto", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            
+            Fabrica fabrica = new Fabrica();
+            IPedido logicaPedido = fabrica.GetPedido();
+            logicaPedido.AltaPedido(null);
+            
+            EntidadesCompartidas.Pedido pedido = new Pedido();
+            pedido.setCliente((EntidadesCompartidas.Cliente)listClientes.getSelectedValue());
+            pedido.setEstado(TipoEstado.Preparacion);
+            pedido.setFecha(Date.from(Instant.now()));
+            
+            
+            ArrayList<Object[]> arrayProductos = new ArrayList<>();
+            
+            //Cargar lista de productos y cantidades en arrayProductos
+            
+            pedido.setListaProductos(arrayProductos);
+            pedido.setPrecio(Integer.getInteger(txtCantidad.getText()));
+            pedido.setRestaurante((EntidadesCompartidas.Restaurante)listRestaurantes.getSelectedValue());
+        }
+    }//GEN-LAST:event_btnConfirmarMouseClicked
+
+    private void btnQuitarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuitarProductoMouseClicked
+        
+        if(listProductosPedidos.getSelectedIndex() < 0){
+            JOptionPane.showMessageDialog(this,"Debe seleccionar un producto.", "Producto", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            Object[] lista = (Object[])listProductosPedidos.getSelectedValue();
+            listModelProductoPedido.removeElement(lista);
+            listProductosPedidos.setModel(listModelProductoPedido);       
+        }
+    }//GEN-LAST:event_btnQuitarProductoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -392,21 +647,23 @@ public class Pedidos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pedidos().setVisible(true);
+                new FPedidos().setVisible(true);
             }
         });
         
@@ -420,6 +677,7 @@ public class Pedidos extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCategoria;
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JButton btnQuitarProducto;
     private javax.swing.JButton btnRestaurante;
     private javax.swing.JComboBox cmbCategorias;
     private javax.swing.JLabel jLabel1;
@@ -430,7 +688,6 @@ public class Pedidos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JList jList1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -440,10 +697,11 @@ public class Pedidos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblClienteNombre;
     private javax.swing.JLabel lblDireccion;
-    private javax.swing.JLabel lblDireccion1;
+    private javax.swing.JLabel lblRestaurante;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JList listClientes;
     private javax.swing.JList listProductos;
+    private javax.swing.JList listProductosPedidos;
     private javax.swing.JList listRestaurantes;
     private javax.swing.JMenu menuGenerarPedido;
     private javax.swing.JMenuBar menuPedidos;

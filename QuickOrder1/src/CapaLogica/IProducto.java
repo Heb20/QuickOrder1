@@ -16,5 +16,5 @@ public interface IProducto {
     public void AltaProducto(Producto producto);
     
     //Devuelve una lista de los productos de un restaurante
-    public ArrayList<Producto> ListarProductosPorRestaurante(int restauranteId);
+    public ArrayList<Producto> ListarProductosPorRestaurante(EntidadesCompartidas.Restaurante restaurante);
 }

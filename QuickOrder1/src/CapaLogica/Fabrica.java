@@ -14,19 +14,19 @@ public class Fabrica {
     public Fabrica() {
     }
     
-    IUsuario GetUsuario(){
+    public IUsuario GetUsuario(){
         return new Usuario();
     }
     
-    IPedido GetPedido(){
+    public IPedido GetPedido(){
         return new Pedido();
     }
     
-    IProducto GetProducto(){
+    public IProducto GetProducto(){
         return new Producto();
     }
     
-    IRestaurante GetRestaurante(){
+    public IRestaurante GetRestaurante(){
         return new Restaurante();
     }
 }
