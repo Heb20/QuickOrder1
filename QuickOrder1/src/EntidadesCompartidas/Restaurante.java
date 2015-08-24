@@ -63,7 +63,7 @@ public class Restaurante extends Usuario implements Serializable{
     
     @Override
     public String toString() {
-        return "Restaurante{" + "ListaCategorias=" + ListaCategorias + ", ListaImagenes=" + ListaImagenes + '}';
+        return "Restaurante {" + " Nickname=" + getNickname() + ", ListaCategorias=" + ListaCategorias + ", ListaImagenes=" + ListaImagenes + '}';
     }
     
 }
