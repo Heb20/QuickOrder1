@@ -17,11 +17,11 @@ public interface IRestaurante {
     
     public void AltaCategoria(Categoria categoria);
     
-    //Naty
+    //Naty-Da de alta un nuevo restaurante en el sistema
     public boolean RegistrarRestaurante(String nickname, String email, String nombre, String direccion, ArrayList<String> ListaImagenes, ArrayList<Categoria> ListaCategorias); 
-    //Naty
+    //Naty-Devuelve una lista con categorías seleccionadas de entre todas las categorías existentes en el Sistema
     public ArrayList<Categoria> SeleccionarCategorias(ArrayList<Categoria> categorias);
-    //Naty
+    //Naty-Devuelve una lista de imagenes
     public ArrayList<String> SeleccionarImagenes(ArrayList<String> imagenes);
     
     

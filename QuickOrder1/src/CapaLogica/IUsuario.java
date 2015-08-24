@@ -23,6 +23,19 @@ public interface IUsuario {
     //Devuelve una lista con todos los clientes del sistema
     public ArrayList<Cliente> ListarClientes();
 
+    
+    //Naty-Lista la información de un cliente determinado y sus pedidos asociados
+    public void VerInformacionCliente();
+    
+    //Naty-Retorna nick e email de todos los usuarios registrados en el sistema como Clientes
+    public ArrayList<Cliente> ListarNickEmailCte();
+    
+    //Naty-Retorna los datos de un cliente determinado
+    public Cliente ListarDatosClienteSeleccionado();
+    
+    //Naty-Retorna una lista con los Pedidos asociados al Cliente
+    public ArrayList<Pedido> ListarPedidosCliente(Cliente cliente);
+    
 }
 
 
