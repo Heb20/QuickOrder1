@@ -24,7 +24,7 @@ public class Test {
     
         
         public void test() throws ParseException{
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrder1");
+            /*EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrder1");
             EntityManager em = emf.createEntityManager();
             FechaADate fecha = new FechaADate();
             Date fech = fecha.safecha("20/02/1991");
@@ -90,7 +90,7 @@ public class Test {
             ped.setListaProductos(ListaProductos);
             em.persist(ped);
             
-            em.getTransaction().commit();
+            em.getTransaction().commit();*/
         }
 
 
