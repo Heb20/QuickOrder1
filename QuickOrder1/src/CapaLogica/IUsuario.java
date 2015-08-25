@@ -18,7 +18,7 @@ import java.util.Date;
 public interface IUsuario {
     
     //Naty
-    public boolean RegistrarCliente(String nickname, String email, String nombre, String direccion, String apellido, Date fechaNac, String Imagen);
+    public void RegistrarCliente(String nickname, String email, String nombre, String direccion, String apellido, Date fechaNac, String Imagen);
 
     //Devuelve una lista con todos los clientes del sistema
     public ArrayList<Cliente> ListarClientes();

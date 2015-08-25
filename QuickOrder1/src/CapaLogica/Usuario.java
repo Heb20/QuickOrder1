@@ -8,6 +8,7 @@ package CapaLogica;
 import EntidadesCompartidas.Cliente;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.persistence.*;
 
 /**
  *
@@ -24,8 +25,33 @@ public class Usuario implements IUsuario{
     }
 
     @Override
-    public boolean RegistrarCliente(String nickname, String email, String nombre, String direccion, String apellido, Date fechaNac, String Imagen) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void RegistrarCliente(String nickname, String email, String nombre, String direccion, String apellido, Date fechaNac, String Imagen) {
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("QuickOrder1");
+        EntityManager em = emf.createEntityManager();
+        
+        em.getTransaction().begin();
+        
+        EntidadesCompartidas.Cliente cliente = new EntidadesCompartidas.Cliente();
+        cliente.setNickname(nickname);
+        //FALTA Agregar verificacion nickname
+        cliente.setEmail(email);
+        //FALTA Agregar verificacion email
+        cliente.setNombre(nombre);
+        cliente.setDireccion(direccion);
+        cliente.setApellido(apellido);
+        cliente.setFechaNac(fechaNac);
+        cliente.setImagen(Imagen);
+        //FALTA validar formato de todos los campos
+        
+        em.persist(cliente);
+        em.getTransaction().commit();
+        
+        em.close();
+        emf.close();
+        
+       System.out.println("Alta efectuada");
+        
     }
 
     @Override
